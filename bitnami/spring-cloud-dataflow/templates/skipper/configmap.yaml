@@ -33,6 +33,14 @@ data:
     {{- end }}
     spring:
       cloud:
+        {{- if .Values.deployer.applicationConfigurations }}
+        deployer:
+          {{- range $appName, $appConfiguration := .Values.deployer.applicationConfigurations }}
+          {{ $appName }}:
+            kubernetes:
+              {{- toYaml $appConfiguration | nindent 14 }}
+          {{- end }}
+        {{- end }}
         skipper:
           server:
             platform:
